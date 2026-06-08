@@ -1,6 +1,13 @@
 import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import { Home, Book } from "lucide-react";
+import { Layout } from "./components/refine-ui/layout/layout";
+import { Outlet } from "react-router";
+
+import Dashboard from "./pages/Dashboard";
+import SubjectsList from "./pages/subjects/List";
+import SubjectsCreate from "./pages/subjects/Create";
 
 import routerProvider, {
   DocumentTitleHandler,
@@ -16,7 +23,6 @@ import { dataProvider } from "./providers/data";
 function App() {
   return (
     <BrowserRouter>
-      <GitHubBanner />
       <RefineKbarProvider>
         <ThemeProvider>
           <DevtoolsProvider>
@@ -29,9 +35,33 @@ function App() {
                 warnWhenUnsavedChanges: true,
                 projectId: "Imt2VG-YRf85J-1TGWRs",
               }}
+
+              resources = {[
+                {
+                  name: "dashboard",
+                  list: "/",
+                  meta: { lable: 'Home', icon: <Home/> },
+                },
+                {
+                  name: "subjects",
+                  list: "/subjects",
+                  meta: { lable: 'Subjects', icon: <Book/> },
+                }
+              ]}
             >
               <Routes>
-                <Route index element={<WelcomePage />} />
+                <Route element={
+                  <Layout>
+                    <Outlet />
+                  </Layout>
+                }>
+
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="subjects">
+                    <Route index element={<SubjectsList />} />
+                    <Route path="create" element={<SubjectsCreate />} />
+                  </Route>
+                </Route>
               </Routes>
               <Toaster />
               <RefineKbar />
