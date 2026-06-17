@@ -40,12 +40,13 @@ function App() {
                 {
                   name: "dashboard",
                   list: "/",
-                  meta: { lable: 'Home', icon: <Home/> },
+                  meta: { label: 'Home', icon: <Home/> },
                 },
                 {
                   name: "subjects",
                   list: "/subjects",
-                  meta: { lable: 'Subjects', icon: <Book/> },
+                  create: "/subjects/create",
+                  meta: { label: 'Subjects', icon: <Book/> },
                 }
               ]}
             >
