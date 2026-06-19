@@ -18,7 +18,7 @@ import "./App.css";
 import { Toaster } from "./components/refine-ui/notification/toaster";
 import { useNotificationProvider } from "./components/refine-ui/notification/use-notification-provider";
 import { ThemeProvider } from "./components/refine-ui/theme/theme-provider";
-import { dataProvider } from "./providers/data";
+import { dataProvider } from "./providers/data"
 
 function App() {
   return (
@@ -36,17 +36,17 @@ function App() {
                 projectId: "Imt2VG-YRf85J-1TGWRs",
               }}
 
-              resources = {[
+              resources={[
                 {
                   name: "dashboard",
                   list: "/",
-                  meta: { label: 'Home', icon: <Home/> },
+                  meta: { label: 'Home', icon: <Home /> },
                 },
                 {
                   name: "subjects",
                   list: "/subjects",
                   create: "/subjects/create",
-                  meta: { label: 'Subjects', icon: <Book/> },
+                  meta: { label: 'Subjects', icon: <Book /> },
                 }
               ]}
             >
