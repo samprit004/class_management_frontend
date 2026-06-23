@@ -1,28 +1,24 @@
-import { Subject } from "../types";
+// Mock data for development
 
-export const MOCK_SUBJECTS: Subject[] = [
-    {
-        id: 1,
-        code: "CS101",
-        name: "Introduction to Computer Science",
-        department: "CS",
-        description: "An introductory course covering the fundamental concepts of computer science and programming.",
-        createdAt: new Date().toISOString(),
-    },
-    {
-        id: 2,
-        code: "MATH201",
-        name: "Calculus II",
-        department: "Math",
-        description: "Advanced study of integration, sequences, series, and power series.",
-        createdAt: new Date().toISOString(),
-    },
-    {
-        id: 3,
-        code: "ENG102",
-        name: "Literature and Composition",
-        department: "English",
-        description: "A course focused on critical reading and writing through the study of various literary genres.",
-        createdAt: new Date().toISOString(),
-    }
+export interface Teacher {
+  name: string;
+}
+
+export interface Subject {
+  id: number;
+  name: string;
+  code: string;
+}
+
+export const teachers: Teacher[] = [
+  { name: "Alice Johnson" },
+  { name: "Bob Smith" },
+  { name: "Carol Lee" },
+];
+
+export const subjects: Subject[] = [
+  { id: 1, name: "Mathematics", code: "MAT" },
+  { id: 2, name: "Physics", code: "PHY" },
+  { id: 3, name: "Chemistry", code: "CHE" },
+  { id: 4, name: "Biology", code: "BIO" },
 ];

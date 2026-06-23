@@ -128,7 +128,7 @@
   }
 
   .class-form-card {
-    @apply max-w-3xl gap-2 w-full mx-auto relative overflow-hidden border shadow-sm border-foreground/20;
+    @apply w-full mx-auto relative overflow-hidden border shadow-sm border-foreground/20;
   }
 
   .upload-dropzone {
