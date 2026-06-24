@@ -20,10 +20,22 @@ const options: CreateDataProviderOptions = {
                 const value = String(filter.value);
 
                 if (resource === 'subjects') {
+                    if (field === 'departmentId') params.departmentId = value;
                     if (field === 'department') params.department = value;
                     if (field === 'name' || field === 'code') params.search = value;
                 }
-
+                if (resource === 'departments') {
+                    if (field === 'name') params.search = value;
+                }
+                if (resource === 'classes') {
+                    if (field === 'name') params.search = value;
+                    if (field === 'subject') params.subject = value;
+                    if (field === 'teacher') params.teacher = value;
+                }
+                if (resource === 'users') {
+                    if (field === 'role') params.role = value;
+                    if (field === 'name' || field === 'email') params.search = value;
+                }
             })
 
             return params;
@@ -39,6 +51,7 @@ const options: CreateDataProviderOptions = {
             return payload.pagination?.total ?? payload.data?.length ?? 0;
         },
     },
+
 }
 
 const { dataProvider } = createDataProvider(BACKEND_BASE_URL, options);

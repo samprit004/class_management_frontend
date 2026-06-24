@@ -1,15 +1,18 @@
 import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-import { Home, Book, GraduationCap } from "lucide-react";
+import { Home, Book, GraduationCap, Building2 } from "lucide-react";
 import { Layout } from "./components/refine-ui/layout/layout";
 import { Outlet } from "react-router";
 
 import Dashboard from "./pages/Dashboard";
+import DepartmentsList from "./pages/departments/List";
+import DepartmentsCreate from "./pages/departments/Create";
 import SubjectsList from "./pages/subjects/List";
 import SubjectsCreate from "./pages/subjects/Create";
 import ClassesList from "./pages/classes/List";
 import ClassesCreate from "./pages/classes/Create";
+import ClassesShow from "./pages/classes/Show";
 
 import routerProvider, {
   DocumentTitleHandler,
@@ -45,6 +48,12 @@ function App() {
                   meta: { label: 'Home', icon: <Home /> },
                 },
                 {
+                  name: "departments",
+                  list: "/departments",
+                  create: "/departments/create",
+                  meta: { label: 'Departments', icon: <Building2 /> },
+                },
+                {
                   name: "subjects",
                   list: "/subjects",
                   create: "/subjects/create",
@@ -54,6 +63,7 @@ function App() {
                   name: "classes",
                   list: "/classes",
                   create: "/classes/create",
+                  show: "/classes/show/:id",
                   meta: { label: 'Classes', icon: <GraduationCap /> },
                 }
               ]}
@@ -66,6 +76,10 @@ function App() {
                 }>
 
                   <Route path="/" element={<Dashboard />} />
+                  <Route path="departments">
+                    <Route index element={<DepartmentsList />} />
+                    <Route path="create" element={<DepartmentsCreate />} />
+                  </Route>
                   <Route path="subjects">
                     <Route index element={<SubjectsList />} />
                     <Route path="create" element={<SubjectsCreate />} />
@@ -73,6 +87,7 @@ function App() {
                   <Route path="classes">
                     <Route index element={<ClassesList />} />
                     <Route path="create" element={<ClassesCreate />} />
+                    <Route path="show/:id" element={<ClassesShow />} />
                   </Route>
                 </Route>
               </Routes>
