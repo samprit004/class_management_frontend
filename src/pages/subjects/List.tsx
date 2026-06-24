@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Department, Subject } from '@/types';
+import { useAuth } from '@/contexts/AuthContext';
 import { useList } from '@refinedev/core';
 import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
@@ -13,6 +14,8 @@ import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 const SubjectsList = () => {
+    const { user } = useAuth();
+    const canCreate = user?.role === 'admin' || user?.role === 'teacher';
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDepartmentId, setSelectedDepartmentId] = useState('');
 
@@ -89,7 +92,7 @@ const SubjectsList = () => {
             <div className='intro-row'>
                 <p>Quick access to all the management tools for subjects.</p>
 
-                <div className='flex gap-2 w-full sm:w-auto'>
+                <div className='flex flex-wrap items-center gap-2'>
                     <div className='search-field'>
                         <Search className='search-icon' />
                         <Input
@@ -119,7 +122,7 @@ const SubjectsList = () => {
                         </SelectContent>
                     </Select>
 
-                    <CreateButton />
+                    {canCreate && <CreateButton />}
                 </div>
             </div>
 

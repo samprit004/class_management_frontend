@@ -5,12 +5,15 @@ import { ListView } from '@/components/refine-ui/views/list-view';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Department } from '@/types';
+import { useAuth } from '@/contexts/AuthContext';
 import { useTable } from '@refinedev/react-table';
 import { ColumnDef } from '@tanstack/react-table';
 import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 const DepartmentsList = () => {
+    const { user } = useAuth();
+    const canCreate = user?.role === 'admin' || user?.role === 'teacher';
     const [searchQuery, setSearchQuery] = useState('');
 
     const searchFilters = searchQuery
@@ -76,7 +79,7 @@ const DepartmentsList = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
-                    <CreateButton />
+                    {canCreate && <CreateButton />}
                 </div>
             </div>
 

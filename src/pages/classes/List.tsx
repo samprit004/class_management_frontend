@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select.tsx";
 import { CreateButton } from "@/components/refine-ui/buttons/create.tsx";
 import { DataTable } from "@/components/refine-ui/data-table/data-table.tsx";
+import { useAuth } from "@/contexts/AuthContext";
 import { useTable } from "@refinedev/react-table";
 import { ClassDetails, Subject, User } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -21,9 +22,9 @@ import { ShowButton } from "@/components/refine-ui/buttons/show.tsx";
 import { useList } from "@refinedev/core";
 
 const ClassesList = () => {
-    /* ──────────────────────────────────────────────────────────────
-     *   UI state – search bar + two dropdown filters
-     * ────────────────────────────────────────────────────────────── */
+    const { user } = useAuth();
+    const canCreate = user?.role === 'admin' || user?.role === 'teacher';
+
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedSubject, setSelectedSubject] = useState("all");
     const [selectedTeacher, setSelectedTeacher] = useState("all");
@@ -177,60 +178,47 @@ const ClassesList = () => {
             <div className="intro-row">
                 <p>Manage your classes, subjects, and teachers.</p>
 
-                <div className="actions-row">
-                    {/* ───── Search ───── */}
-                    <div className="search-field">
+                <div className="flex flex-wrap items-center gap-2">
+                    <div className="search-field w-[200px]">
                         <Search className="search-icon" />
                         <Input
                             type="text"
                             placeholder="Search by name..."
-                            className="pl-10 w-full"
+                            className="pl-10"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
 
-                    {/* ───── Filters ───── */}
-                    <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-                        {/* Subject filter */}
-                        <Select
-                            value={selectedSubject}
-                            onValueChange={setSelectedSubject}
-                        >
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Filter by subject" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">All Subjects</SelectItem>
-                                {subjects.map((subject) => (
-                                    <SelectItem key={subject.id} value={subject.name}>
-                                        {subject.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
+                    <Select value={selectedSubject} onValueChange={setSelectedSubject}>
+                        <SelectTrigger className="w-[160px]">
+                            <SelectValue placeholder="Filter by subject" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">All Subjects</SelectItem>
+                            {subjects.map((subject) => (
+                                <SelectItem key={subject.id} value={subject.name}>
+                                    {subject.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
 
-                        {/* Teacher filter */}
-                        <Select
-                            value={selectedTeacher}
-                            onValueChange={setSelectedTeacher}
-                        >
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Filter by teacher" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">All Teachers</SelectItem>
-                                {teachers.map((teacher) => (
-                                    <SelectItem key={teacher.id} value={teacher.name}>
-                                        {teacher.name}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
+                    <Select value={selectedTeacher} onValueChange={setSelectedTeacher}>
+                        <SelectTrigger className="w-[160px]">
+                            <SelectValue placeholder="Filter by teacher" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">All Teachers</SelectItem>
+                            {teachers.map((teacher) => (
+                                <SelectItem key={teacher.id} value={teacher.name}>
+                                    {teacher.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
 
-                        {/* Create new class */}
-                        <CreateButton resource="classes" />
-                    </div>
+                    {canCreate && <CreateButton resource="classes" />}
                 </div>
             </div>
 
